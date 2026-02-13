@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>西关味·加盟投资测算器</title>
+    <title>加盟商单店回本测算器 · 西关味</title>
     <style>
         * {
             margin: 0;
@@ -18,104 +18,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
+            padding: 30px 20px;
         }
-        /* ---------- 主表单（优化版：可滚动，适配小屏） ---------- */
-        .entry-form-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(44, 94, 75, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-        .entry-form-card {
-            background: white;
-            border-radius: 48px;
-            padding: 32px 24px;  /* 适当减小上下内边距 */
-            max-width: 550px;
-            width: 90%;
-            max-height: 90vh;    /* 高度不超过视口90% */
-            overflow-y: auto;    /* 内容过多时内部滚动 */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-            border: 1px solid #e7ddd2;
-            -webkit-overflow-scrolling: touch; /* 流畅滚动 */
-        }
-        .entry-form-card h2 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #2c5e4b;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .entry-form-card p {
-            color: #5e4b3c;
-            margin-bottom: 24px;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        .form-field {
-            margin-bottom: 18px;
-        }
-        .form-field label {
-            display: block;
-            font-weight: 600;
-            color: #3a2e24;
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-        .form-field input, .form-field select {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e7ddd2;
-            border-radius: 40px;
-            font-size: 15px;
-            background: white;
-            transition: 0.2s;
-        }
-        .form-field input:focus, .form-field select:focus {
-            border-color: #b16e42;
-            outline: none;
-        }
-        .form-field select {
-            appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%235e4b3c'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 18px center;
-        }
-        .entry-submit {
-            background: #b16e42;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 700;
-            width: 100%;
-            margin-top: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 2px solid white;
-        }
-        .entry-submit:hover {
-            background: #9a5c36;
-            transform: scale(1.02);
-        }
-        .privacy-note {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #8a6e4b;
-            text-align: center;
-        }
-        /* ---------- 测算器（初始隐藏） ---------- */
         .calculator {
             max-width: 1100px;
             width: 100%;
@@ -123,15 +27,12 @@
             border-radius: 48px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.06);
             padding: 40px 36px;
-            margin-bottom: 20px;
-            display: none;
         }
         .title {
             display: flex;
             align-items: center;
             gap: 14px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
         .title h1 {
             font-size: 30px;
@@ -267,11 +168,9 @@
         .fixed-param {
             font-weight: 600;
             color: #2c5e4b;
-            background: transparent;
-            padding: 0;
         }
-        .investment-badge {
-            background: #2c5e4b;
+        .mgmt-fee {
+            background: #b16e42;
             color: white;
             padding: 6px 20px;
             border-radius: 40px;
@@ -323,326 +222,310 @@
     </style>
 </head>
 <body>
-    <!-- ===== 主表单：加盟商填写后进入测算器 ===== -->
-    <div id="entryFormContainer" class="entry-form-container">
-        <div class="entry-form-card">
-            <h2>
-                <span>🥢</span> 西关味·加盟投资
-            </h2>
-            <p>请填写基本信息，解锁您的专属回本测算器。<br>总部开发经理将根据您的意向为您定制方案。</p>
-            
-            <div class="form-field">
-                <label>📛 姓名</label>
-                <input type="text" id="entryName" placeholder="例如：张伟" autocomplete="off">
+<div class="calculator">
+    <div class="title">
+        <h1>您的门店·回本测算器</h1>
+        <span class="badge">实收口径·含总部管理费</span>
+    </div>
+    <div class="sub">拖动滑块，模拟您真实的租金、人工、营业额——回本时间立刻算出来</div>
+
+    <!-- 快捷店型预设 -->
+    <div class="preset-area">
+        <span class="preset-label">📌 快速试用典型店型：</span>
+        <div class="preset-buttons">
+            <button class="preset-btn" onclick="setPreset('kiosk')">档口店 (20㎡/日收2000)</button>
+            <button class="preset-btn" onclick="setPreset('community')">社区店 (50㎡/日收4000)</button>
+            <button class="preset-btn" onclick="setPreset('mall')">商圈店 (80㎡/日收6000)</button>
+        </div>
+    </div>
+
+    <!-- 拖拽控制区 -->
+    <div class="control-grid">
+        <!-- 面积 + 租金单价 -->
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>📐 店铺面积</span>
+                <span id="areaValue">50</span>
             </div>
-            
-            <div class="form-field">
-                <label>🎂 年龄</label>
-                <input type="number" id="entryAge" placeholder="例如：35" min="18" max="70" step="1">
+            <input type="range" id="areaSlider" min="20" max="200" value="50" step="5" oninput="updateRent()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">平方米</span>
+                <input type="number" id="areaInput" min="20" max="200" value="50" step="5" onchange="syncArea()">
             </div>
-            
-            <div class="form-field">
-                <label>📍 意向开店城市</label>
-                <input type="text" id="entryCity" placeholder="例如：郑州、西安" autocomplete="off">
+        </div>
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>💰 每平米月租金</span>
+                <span id="rentPriceValue">150</span>
             </div>
-            
-            <div class="form-field">
-                <label>📞 手机号码</label>
-                <input type="tel" id="entryPhone" placeholder="11位手机号" autocomplete="off">
+            <input type="range" id="rentPriceSlider" min="50" max="300" value="150" step="5" oninput="updateRent()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">元/㎡·月</span>
+                <input type="number" id="rentPriceInput" min="50" max="300" value="150" step="5" onchange="syncRentPrice()">
             </div>
-            
-            <div class="form-field">
-                <label>💰 预计投资额</label>
-                <select id="entryInvestment">
-                    <option value="" disabled selected>请选择区间</option>
-                    <option value="10-20万">10-20万</option>
-                    <option value="20-30万">20-30万</option>
-                    <option value="30-40万">30-40万</option>
-                    <option value="40-50万">40-50万</option>
-                    <option value="50万以上">50万以上</option>
-                </select>
+        </div>
+        <!-- 员工人数 + 人均工资 -->
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>👥 员工人数</span>
+                <span id="staffCountValue">4</span>
             </div>
-            
-            <button class="entry-submit" onclick="submitEntryForm()">▶ 立即进入测算器</button>
-            
-            <div class="privacy-note">
-                提交即视为同意《隐私政策》，我们将严格保护您的个人信息
+            <input type="range" id="staffCountSlider" min="1" max="10" value="4" step="1" oninput="updateStaff()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">人</span>
+                <input type="number" id="staffCountInput" min="1" max="10" value="4" step="1" onchange="syncStaffCount()">
+            </div>
+        </div>
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>💵 人均月工资</span>
+                <span id="salaryPerPersonValue">4000</span>
+            </div>
+            <input type="range" id="salaryPerPersonSlider" min="3000" max="5000" value="4000" step="50" oninput="updateStaff()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">元/人</span>
+                <input type="number" id="salaryPerPersonInput" min="3000" max="5000" value="4000" step="50" onchange="syncSalary()">
+            </div>
+        </div>
+        <!-- 日均实收营业额 + 外卖占比 -->
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>📅 日均实收营业额</span>
+                <span id="dailyRevenueValue">4000</span>
+            </div>
+            <input type="range" id="dailyRevenueSlider" min="1000" max="15000" value="4000" step="100" oninput="updateDaily()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">元/天</span>
+                <input type="number" id="dailyRevenueInput" min="1000" max="15000" value="4000" step="100" onchange="syncDaily()">
+            </div>
+        </div>
+        <div class="slider-card">
+            <div class="slider-header">
+                <span>📱 外卖订单占比</span>
+                <span id="waimaiRatioValue">50</span>
+            </div>
+            <input type="range" id="waimaiRatioSlider" min="30" max="70" value="50" step="5" oninput="updateWaimai()">
+            <div class="value-row">
+                <span style="color:#5e4b3c;">%</span>
+                <input type="number" id="waimaiRatioInput" min="30" max="70" value="50" step="5" onchange="syncWaimai()">
             </div>
         </div>
     </div>
 
-    <!-- ===== 测算器主体（初始隐藏） ===== -->
-    <div id="calculatorMain" class="calculator">
-        <div class="title">
-            <h1>您的门店·回本测算器</h1>
-            <span class="badge">实收口径·含总部管理费</span>
-        </div>
-        <div class="sub">拖动滑块，模拟您真实的租金、人工、营业额——回本时间立刻算出来</div>
+    <!-- 固定成本参数（含总部管理费） -->
+    <div class="fixed-params">
+        <span class="fixed-param">🍖 食材成本 = 营业额的40%</span>
+        <span class="fixed-param">💧 水电杂费 = 营业额的8%</span>
+        <span class="mgmt-fee" id="mgmtFeeDisplay">📋 总部管理费：817元/月</span>
+        <span class="fixed-param" style="background: #2c5e4b; color: white; padding: 6px 20px; border-radius: 40px;">💰 参考总投资：<span id="investmentDisplay">30.0</span>万元</span>
+    </div>
 
-        <!-- 快捷店型预设 -->
-        <div class="preset-area">
-            <span class="preset-label">📌 快速试用典型店型：</span>
-            <div class="preset-buttons">
-                <button class="preset-btn" onclick="setPreset('kiosk')">档口店 (20㎡/日收2000)</button>
-                <button class="preset-btn" onclick="setPreset('community')">社区店 (50㎡/日收4000)</button>
-                <button class="preset-btn" onclick="setPreset('mall')">商圈店 (80㎡/日收6000)</button>
-            </div>
+    <!-- 实时结果 -->
+    <div class="result-panel">
+        <div class="result-item">
+            <div class="result-label">月实收营业额</div>
+            <div><span id="monthlyRevenue" class="result-number">12.0</span><span class="result-unit">万元</span></div>
         </div>
-
-        <!-- 拖拽控制区 -->
-        <div class="control-grid">
-            <div class="slider-card">
-                <div class="slider-header"><span>📐 店铺面积</span><span id="areaValue">50</span></div>
-                <input type="range" id="areaSlider" min="20" max="200" value="50" step="5" oninput="updateRent()">
-                <div class="value-row"><span style="color:#5e4b3c;">平方米</span><input type="number" id="areaInput" min="20" max="200" value="50" step="5" onchange="syncArea()"></div>
-            </div>
-            <div class="slider-card">
-                <div class="slider-header"><span>💰 每平米月租金</span><span id="rentPriceValue">150</span></div>
-                <input type="range" id="rentPriceSlider" min="50" max="300" value="150" step="5" oninput="updateRent()">
-                <div class="value-row"><span style="color:#5e4b3c;">元/㎡·月</span><input type="number" id="rentPriceInput" min="50" max="300" value="150" step="5" onchange="syncRentPrice()"></div>
-            </div>
-            <div class="slider-card">
-                <div class="slider-header"><span>👥 员工人数</span><span id="staffCountValue">4</span></div>
-                <input type="range" id="staffCountSlider" min="1" max="10" value="4" step="1" oninput="updateStaff()">
-                <div class="value-row"><span style="color:#5e4b3c;">人</span><input type="number" id="staffCountInput" min="1" max="10" value="4" step="1" onchange="syncStaffCount()"></div>
-            </div>
-            <div class="slider-card">
-                <div class="slider-header"><span>💵 人均月工资</span><span id="salaryPerPersonValue">4000</span></div>
-                <input type="range" id="salaryPerPersonSlider" min="3000" max="5000" value="4000" step="50" oninput="updateStaff()">
-                <div class="value-row"><span style="color:#5e4b3c;">元/人</span><input type="number" id="salaryPerPersonInput" min="3000" max="5000" value="4000" step="50" onchange="syncSalary()"></div>
-            </div>
-            <div class="slider-card">
-                <div class="slider-header"><span>📅 日均实收营业额</span><span id="dailyRevenueValue">4000</span></div>
-                <input type="range" id="dailyRevenueSlider" min="1000" max="15000" value="4000" step="100" oninput="updateDaily()">
-                <div class="value-row"><span style="color:#5e4b3c;">元/天</span><input type="number" id="dailyRevenueInput" min="1000" max="15000" value="4000" step="100" onchange="syncDaily()"></div>
-            </div>
-            <div class="slider-card">
-                <div class="slider-header"><span>📱 外卖订单占比</span><span id="waimaiRatioValue">50</span></div>
-                <input type="range" id="waimaiRatioSlider" min="30" max="70" value="50" step="5" oninput="updateWaimai()">
-                <div class="value-row"><span style="color:#5e4b3c;">%</span><input type="number" id="waimaiRatioInput" min="30" max="70" value="50" step="5" onchange="syncWaimai()"></div>
-            </div>
+        <div class="result-item">
+            <div class="result-label">月净利润</div>
+            <div><span id="monthlyProfit" class="result-number">3.81</span><span class="result-unit">万元</span></div>
         </div>
-
-        <!-- 固定成本参数 -->
-        <div class="fixed-params">
-            <span class="fixed-param">🍖 食材成本 = 营业额的40%</span>
-            <span class="fixed-param">💧 水电杂费 = 营业额的8%</span>
-            <span class="fixed-param" id="mgmtFeeDisplay">📋 总部管理费：817元/月</span>
-            <span class="investment-badge">💰 参考总投资：<span id="investmentDisplay">30.0</span>万元</span>
+        <div class="result-item">
+            <div class="result-label">回本周期</div>
+            <div><span id="paybackPeriod" class="result-number payback-number">7.9</span><span class="result-unit">个月</span></div>
         </div>
-
-        <!-- 实时结果 -->
-        <div class="result-panel">
-            <div class="result-item"><div class="result-label">月实收营业额</div><div><span id="monthlyRevenue" class="result-number">12.0</span><span class="result-unit">万元</span></div></div>
-            <div class="result-item"><div class="result-label">月净利润</div><div><span id="monthlyProfit" class="result-number">3.81</span><span class="result-unit">万元</span></div></div>
-            <div class="result-item"><div class="result-label">回本周期</div><div><span id="paybackPeriod" class="result-number payback-number">7.9</span><span class="result-unit">个月</span></div></div>
-            <div class="result-item"><div class="result-label">保本日均营业额</div><div><span id="breakevenDaily" class="result-number">2,260</span><span class="result-unit">元/天</span></div></div>
-        </div>
-
-        <div class="footnote">
-            <strong>💡 测算逻辑说明</strong><br>
-            • 您拖拽的所有数值均为“实收口径”（即您每天实际进账的营业额，已扣除平台扣点、满减红包等）。<br>
-            • 食材成本按实收的40%计算，水电杂费按8%计算，两项合计48%为变动成本。<br>
-            • 总部管理费已包含：档口店483元/月、社区店817元/月、商圈店1567元/月（年费折算）。<br>
-            • 月固定成本 = 月租金 + 员工总工资 + 总部管理费。保本点 = 固定成本 ÷ (1 - 变动成本率) ÷ 30天。<br>
-            • 本工具仅作投资参考，实际盈利受选址、运营、季节等因素影响。
+        <div class="result-item">
+            <div class="result-label">保本日均营业额</div>
+            <div><span id="breakevenDaily" class="result-number">2,260</span><span class="result-unit">元/天</span></div>
         </div>
     </div>
 
-    <script>
-        // ---------- 测算器核心逻辑 ----------
-        const presets = {
-            kiosk: { area:20, daily:2000, staff:2, rentPrice:150, salary:4000, waimai:50, investment:20, mgmtFeeYear:5800 },
-            community: { area:50, daily:4000, staff:4, rentPrice:150, salary:4000, waimai:50, investment:30, mgmtFeeYear:9800 },
-            mall: { area:80, daily:6000, staff:5, rentPrice:150, salary:4000, waimai:50, investment:40, mgmtFeeYear:18800 }
-        };
-        let currentInvestment = 30;
-        let currentMgmtFeeYear = 9800;
+    <div class="footnote">
+        <strong>💡 测算逻辑说明</strong><br>
+        • 您拖拽的所有数值均为“实收口径”（即您每天实际进账的营业额，已扣除平台扣点、满减红包等）。<br>
+        • 食材成本按实收的40%计算，水电杂费按8%计算，两项合计48%为变动成本。<br>
+        • 总部管理费已包含：档口店483元/月、社区店817元/月、商圈店1567元/月（年费折算）。<br>
+        • 月固定成本 = 月租金 + 员工总工资 + 总部管理费。保本点 = 固定成本 ÷ (1 - 变动成本率) ÷ 30天。<br>
+        • 本工具仅作投资参考，实际盈利受选址、运营、季节等因素影响，签约前开发经理会为您做精细化测算。
+    </div>
+</div>
 
-        function initCalculator() {
-            setPreset('community');
-        }
+<script>
+    // ---------- 独立回本测算器 · 含总部管理费 ----------
+    // 店型预设：包含投资额、管理费年费
+    const presets = {
+        kiosk: { area:20, daily:2000, staff:2, rentPrice:150, salary:4000, waimai:50, investment:20, mgmtFeeYear:5800 },
+        community: { area:50, daily:4000, staff:4, rentPrice:150, salary:4000, waimai:50, investment:30, mgmtFeeYear:9800 },
+        mall: { area:80, daily:6000, staff:5, rentPrice:150, salary:4000, waimai:50, investment:40, mgmtFeeYear:18800 }
+    };
 
-        function setPreset(type) {
-            let p = presets[type];
-            document.getElementById('areaSlider').value = p.area;
-            document.getElementById('areaInput').value = p.area;
-            document.getElementById('areaValue').innerText = p.area;
-            document.getElementById('rentPriceSlider').value = p.rentPrice;
-            document.getElementById('rentPriceInput').value = p.rentPrice;
-            document.getElementById('rentPriceValue').innerText = p.rentPrice;
-            document.getElementById('staffCountSlider').value = p.staff;
-            document.getElementById('staffCountInput').value = p.staff;
-            document.getElementById('staffCountValue').innerText = p.staff;
-            document.getElementById('salaryPerPersonSlider').value = p.salary;
-            document.getElementById('salaryPerPersonInput').value = p.salary;
-            document.getElementById('salaryPerPersonValue').innerText = p.salary;
-            document.getElementById('dailyRevenueSlider').value = p.daily;
-            document.getElementById('dailyRevenueInput').value = p.daily;
-            document.getElementById('dailyRevenueValue').innerText = p.daily;
-            document.getElementById('waimaiRatioSlider').value = p.waimai;
-            document.getElementById('waimaiRatioInput').value = p.waimai;
-            document.getElementById('waimaiRatioValue').innerText = p.waimai;
-            
-            currentInvestment = p.investment;
-            currentMgmtFeeYear = p.mgmtFeeYear;
-            
-            document.getElementById('investmentDisplay').innerText = currentInvestment.toFixed(1);
-            let mgmtMonthly = Math.round(currentMgmtFeeYear / 12);
-            document.getElementById('mgmtFeeDisplay').innerHTML = `📋 总部管理费：${mgmtMonthly}元/月`;
-            
-            calculate();
-        }
+    // 当前店型参数
+    let currentInvestment = 30;
+    let currentMgmtFeeYear = 9800;
 
-        // 滑块联动函数
-        function updateRent() {
-            let area = parseFloat(document.getElementById('areaSlider').value);
-            document.getElementById('areaInput').value = area;
-            document.getElementById('areaValue').innerText = area;
-            let rentPrice = parseFloat(document.getElementById('rentPriceSlider').value);
-            document.getElementById('rentPriceInput').value = rentPrice;
-            document.getElementById('rentPriceValue').innerText = rentPrice;
-            calculate();
-        }
-        function syncArea() {
-            let area = parseFloat(document.getElementById('areaInput').value);
-            if(area<20) area=20; if(area>200) area=200;
-            document.getElementById('areaSlider').value = area;
-            document.getElementById('areaValue').innerText = area;
-            calculate();
-        }
-        function syncRentPrice() {
-            let rp = parseFloat(document.getElementById('rentPriceInput').value);
-            if(rp<50) rp=50; if(rp>300) rp=300;
-            document.getElementById('rentPriceSlider').value = rp;
-            document.getElementById('rentPriceValue').innerText = rp;
-            calculate();
-        }
-        function updateStaff() {
-            let staff = parseFloat(document.getElementById('staffCountSlider').value);
-            document.getElementById('staffCountInput').value = staff;
-            document.getElementById('staffCountValue').innerText = staff;
-            let salary = parseFloat(document.getElementById('salaryPerPersonSlider').value);
-            document.getElementById('salaryPerPersonInput').value = salary;
-            document.getElementById('salaryPerPersonValue').innerText = salary;
-            calculate();
-        }
-        function syncStaffCount() {
-            let s = parseFloat(document.getElementById('staffCountInput').value);
-            if(s<1) s=1; if(s>10) s=10;
-            document.getElementById('staffCountSlider').value = s;
-            document.getElementById('staffCountValue').innerText = s;
-            calculate();
-        }
-        function syncSalary() {
-            let sal = parseFloat(document.getElementById('salaryPerPersonInput').value);
-            if(sal<3000) sal=3000; if(sal>5000) sal=5000;
-            document.getElementById('salaryPerPersonSlider').value = sal;
-            document.getElementById('salaryPerPersonValue').innerText = sal;
-            calculate();
-        }
-        function updateDaily() {
-            let d = parseFloat(document.getElementById('dailyRevenueSlider').value);
-            document.getElementById('dailyRevenueInput').value = d;
-            document.getElementById('dailyRevenueValue').innerText = d;
-            calculate();
-        }
-        function syncDaily() {
-            let d = parseFloat(document.getElementById('dailyRevenueInput').value);
-            if(d<1000) d=1000; if(d>15000) d=15000;
-            document.getElementById('dailyRevenueSlider').value = d;
-            document.getElementById('dailyRevenueValue').innerText = d;
-            calculate();
-        }
-        function updateWaimai() {
-            let w = parseFloat(document.getElementById('waimaiRatioSlider').value);
-            document.getElementById('waimaiRatioInput').value = w;
-            document.getElementById('waimaiRatioValue').innerText = w;
-            calculate();
-        }
-        function syncWaimai() {
-            let w = parseFloat(document.getElementById('waimaiRatioInput').value);
-            if(w<30) w=30; if(w>70) w=70;
-            document.getElementById('waimaiRatioSlider').value = w;
-            document.getElementById('waimaiRatioValue').innerText = w;
-            calculate();
-        }
+    // 页面初始化
+    window.onload = function() {
+        setPreset('community');
+    };
 
-        function calculate() {
-            let area = parseFloat(document.getElementById('areaSlider').value);
-            let rentPrice = parseFloat(document.getElementById('rentPriceSlider').value);
-            let staff = parseFloat(document.getElementById('staffCountSlider').value);
-            let salary = parseFloat(document.getElementById('salaryPerPersonSlider').value);
-            let daily = parseFloat(document.getElementById('dailyRevenueSlider').value);
-            
-            const FOOD_RATE = 0.40;
-            const OPEX_RATE = 0.08;
-            const VARIABLE_RATE = FOOD_RATE + OPEX_RATE;
+    // 设置预设店型
+    function setPreset(type) {
+        let p = presets[type];
+        // 面积
+        document.getElementById('areaSlider').value = p.area;
+        document.getElementById('areaInput').value = p.area;
+        document.getElementById('areaValue').innerText = p.area;
+        // 租金单价
+        document.getElementById('rentPriceSlider').value = p.rentPrice;
+        document.getElementById('rentPriceInput').value = p.rentPrice;
+        document.getElementById('rentPriceValue').innerText = p.rentPrice;
+        // 员工人数
+        document.getElementById('staffCountSlider').value = p.staff;
+        document.getElementById('staffCountInput').value = p.staff;
+        document.getElementById('staffCountValue').innerText = p.staff;
+        // 人均工资
+        document.getElementById('salaryPerPersonSlider').value = p.salary;
+        document.getElementById('salaryPerPersonInput').value = p.salary;
+        document.getElementById('salaryPerPersonValue').innerText = p.salary;
+        // 日均实收
+        document.getElementById('dailyRevenueSlider').value = p.daily;
+        document.getElementById('dailyRevenueInput').value = p.daily;
+        document.getElementById('dailyRevenueValue').innerText = p.daily;
+        // 外卖占比
+        document.getElementById('waimaiRatioSlider').value = p.waimai;
+        document.getElementById('waimaiRatioInput').value = p.waimai;
+        document.getElementById('waimaiRatioValue').innerText = p.waimai;
+        
+        // 投资额与管理费
+        currentInvestment = p.investment;
+        currentMgmtFeeYear = p.mgmtFeeYear;
+        
+        // 更新UI显示
+        document.getElementById('investmentDisplay').innerText = currentInvestment.toFixed(1);
+        let mgmtMonthly = Math.round(currentMgmtFeeYear / 12);
+        document.getElementById('mgmtFeeDisplay').innerHTML = `📋 总部管理费：${mgmtMonthly}元/月`;
+        
+        calculate();
+    }
 
-            let monthlyRevenue = daily * 30;
-            let foodCost = monthlyRevenue * FOOD_RATE;
-            let opEx = monthlyRevenue * OPEX_RATE;
-            let laborCost = staff * salary;
-            let rent = area * rentPrice;
-            let mgmtMonthly = currentMgmtFeeYear / 12;
-            
-            let totalCost = foodCost + opEx + laborCost + rent + mgmtMonthly;
-            let netProfit = monthlyRevenue - totalCost;
-            let payback = netProfit > 0 ? (currentInvestment * 10000 / netProfit) : 999;
-            
-            let fixedCost = laborCost + rent + mgmtMonthly;
-            let dailyBreakeven = fixedCost / (1 - VARIABLE_RATE) / 30;
+    // ---------- 滑块联动（均不改变投资额与管理费，沿用当前预设）----------
+    function updateRent() {
+        let area = parseFloat(document.getElementById('areaSlider').value);
+        document.getElementById('areaInput').value = area;
+        document.getElementById('areaValue').innerText = area;
+        let rentPrice = parseFloat(document.getElementById('rentPriceSlider').value);
+        document.getElementById('rentPriceInput').value = rentPrice;
+        document.getElementById('rentPriceValue').innerText = rentPrice;
+        calculate();
+    }
+    function syncArea() {
+        let area = parseFloat(document.getElementById('areaInput').value);
+        if(area<20) area=20; if(area>200) area=200;
+        document.getElementById('areaSlider').value = area;
+        document.getElementById('areaValue').innerText = area;
+        calculate();
+    }
+    function syncRentPrice() {
+        let rp = parseFloat(document.getElementById('rentPriceInput').value);
+        if(rp<50) rp=50; if(rp>300) rp=300;
+        document.getElementById('rentPriceSlider').value = rp;
+        document.getElementById('rentPriceValue').innerText = rp;
+        calculate();
+    }
+    function updateStaff() {
+        let staff = parseFloat(document.getElementById('staffCountSlider').value);
+        document.getElementById('staffCountInput').value = staff;
+        document.getElementById('staffCountValue').innerText = staff;
+        let salary = parseFloat(document.getElementById('salaryPerPersonSlider').value);
+        document.getElementById('salaryPerPersonInput').value = salary;
+        document.getElementById('salaryPerPersonValue').innerText = salary;
+        calculate();
+    }
+    function syncStaffCount() {
+        let s = parseFloat(document.getElementById('staffCountInput').value);
+        if(s<1) s=1; if(s>10) s=10;
+        document.getElementById('staffCountSlider').value = s;
+        document.getElementById('staffCountValue').innerText = s;
+        calculate();
+    }
+    function syncSalary() {
+        let sal = parseFloat(document.getElementById('salaryPerPersonInput').value);
+        if(sal<3000) sal=3000; if(sal>5000) sal=5000;
+        document.getElementById('salaryPerPersonSlider').value = sal;
+        document.getElementById('salaryPerPersonValue').innerText = sal;
+        calculate();
+    }
+    function updateDaily() {
+        let d = parseFloat(document.getElementById('dailyRevenueSlider').value);
+        document.getElementById('dailyRevenueInput').value = d;
+        document.getElementById('dailyRevenueValue').innerText = d;
+        calculate();
+    }
+    function syncDaily() {
+        let d = parseFloat(document.getElementById('dailyRevenueInput').value);
+        if(d<1000) d=1000; if(d>15000) d=15000;
+        document.getElementById('dailyRevenueSlider').value = d;
+        document.getElementById('dailyRevenueValue').innerText = d;
+        calculate();
+    }
+    function updateWaimai() {
+        let w = parseFloat(document.getElementById('waimaiRatioSlider').value);
+        document.getElementById('waimaiRatioInput').value = w;
+        document.getElementById('waimaiRatioValue').innerText = w;
+        calculate();
+    }
+    function syncWaimai() {
+        let w = parseFloat(document.getElementById('waimaiRatioInput').value);
+        if(w<30) w=30; if(w>70) w=70;
+        document.getElementById('waimaiRatioSlider').value = w;
+        document.getElementById('waimaiRatioValue').innerText = w;
+        calculate();
+    }
 
-            document.getElementById('monthlyRevenue').innerText = (monthlyRevenue / 10000).toFixed(1);
-            document.getElementById('monthlyProfit').innerText = (netProfit / 10000).toFixed(2);
-            document.getElementById('paybackPeriod').innerText = payback.toFixed(1);
-            document.getElementById('breakevenDaily').innerText = Math.round(dailyBreakeven).toLocaleString();
-            
-            let mgmtMonthlyDisplay = Math.round(currentMgmtFeeYear / 12);
-            document.getElementById('mgmtFeeDisplay').innerHTML = `📋 总部管理费：${mgmtMonthlyDisplay}元/月`;
-            document.getElementById('investmentDisplay').innerText = currentInvestment.toFixed(1);
-        }
+    // 核心计算（包含总部管理费）
+    function calculate() {
+        let area = parseFloat(document.getElementById('areaSlider').value);
+        let rentPrice = parseFloat(document.getElementById('rentPriceSlider').value);
+        let staff = parseFloat(document.getElementById('staffCountSlider').value);
+        let salary = parseFloat(document.getElementById('salaryPerPersonSlider').value);
+        let daily = parseFloat(document.getElementById('dailyRevenueSlider').value);
+        let wmRatio = parseFloat(document.getElementById('waimaiRatioSlider').value); // 未使用，因为实收已扣除折扣
 
-        // ---------- 主表单提交（集成腾讯文档）----------
-        function submitEntryForm() {
-            // 获取表单值
-            let name = document.getElementById('entryName').value.trim();
-            let age = document.getElementById('entryAge').value.trim();
-            let city = document.getElementById('entryCity').value.trim();
-            let phone = document.getElementById('entryPhone').value.trim();
-            let investment = document.getElementById('entryInvestment').value;
+        // 固定比率
+        const FOOD_RATE = 0.40;
+        const OPEX_RATE = 0.08;
+        const VARIABLE_RATE = FOOD_RATE + OPEX_RATE; // 0.48
 
-            // 简单验证
-            if (!name || !age || !city || !phone || !investment) {
-                alert('请完整填写所有信息');
-                return;
-            }
-            if (phone.length < 11) {
-                alert('请输入11位手机号码');
-                return;
-            }
-            if (isNaN(age) || age < 18 || age > 70) {
-                alert('请输入18-70岁之间的有效年龄');
-                return;
-            }
+        // 月实收营业额
+        let monthlyRevenue = daily * 30;
+        
+        // 变动成本
+        let foodCost = monthlyRevenue * FOOD_RATE;
+        let opEx = monthlyRevenue * OPEX_RATE;
+        
+        // 固定成本
+        let laborCost = staff * salary;
+        let rent = area * rentPrice;
+        let mgmtMonthly = currentMgmtFeeYear / 12;
+        
+        let totalCost = foodCost + opEx + laborCost + rent + mgmtMonthly;
+        let netProfit = monthlyRevenue - totalCost;
+        let payback = netProfit > 0 ? (currentInvestment * 10000 / netProfit) : 999;
+        
+        let fixedCost = laborCost + rent + mgmtMonthly;
+        let dailyBreakeven = fixedCost / (1 - VARIABLE_RATE) / 30;
 
-            // --- 腾讯文档预填链接（已替换为您提供的表单ID） ---
-            let formId = 'DWGtIanRVT2pRRkRI';  // 从您链接中提取的ID
-            let formUrl = `https://docs.qq.com/form/fill/${formId}?_w_tencentdocx_form=1&姓名=${encodeURIComponent(name)}&年龄=${encodeURIComponent(age)}&意向开店城市=${encodeURIComponent(city)}&手机号码=${encodeURIComponent(phone)}&预计投资额=${encodeURIComponent(investment)}`;
-            
-            // 在新窗口打开腾讯文档（用户只需点击“提交”即可）
-            window.open(formUrl, '_blank');
-
-            // 隐藏主表单，显示测算器
-            document.getElementById('entryFormContainer').style.display = 'none';
-            document.getElementById('calculatorMain').style.display = 'block';
-            
-            // 初始化测算器
-            initCalculator();
-            
-            // 提示用户（可选）
-            alert('信息已提交！请在腾讯文档页面点击“提交”完成登记，现在您可以自由测算回本周期了。');
-        }
-    </script>
+        // 更新UI
+        document.getElementById('monthlyRevenue').innerText = (monthlyRevenue / 10000).toFixed(1);
+        document.getElementById('monthlyProfit').innerText = (netProfit / 10000).toFixed(2);
+        document.getElementById('paybackPeriod').innerText = payback.toFixed(1);
+        document.getElementById('breakevenDaily').innerText = Math.round(dailyBreakeven).toLocaleString();
+        
+        // 确保管理费显示正确（可能在手动调整时不变，但预设已更新）
+        let mgmtMonthlyDisplay = Math.round(currentMgmtFeeYear / 12);
+        document.getElementById('mgmtFeeDisplay').innerHTML = `📋 总部管理费：${mgmtMonthlyDisplay}元/月`;
+        document.getElementById('investmentDisplay').innerText = currentInvestment.toFixed(1);
+    }
+</script>
 </body>
 </html>
