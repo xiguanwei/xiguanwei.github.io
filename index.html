@@ -21,7 +21,7 @@
             padding: 20px;
             position: relative;
         }
-        /* ---------- 主表单（初始显示） ---------- */
+        /* ---------- 主表单（优化版：可滚动，适配小屏） ---------- */
         .entry-form-container {
             position: fixed;
             top: 0;
@@ -36,49 +36,48 @@
             backdrop-filter: blur(5px);
         }
         .entry-form-card {
-    background: white;
-    border-radius: 48px;
-    padding: 32px 24px;  /* 适当减小上下内边距 */
-    max-width: 550px;
-    width: 90%;
-    max-height: 90vh;    /* 高度不超过视口90% */
-    overflow-y: auto;    /* 内容过多时内部滚动 */
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-    border: 1px solid #e7ddd2;
-    -webkit-overflow-scrolling: touch; /* 流畅滚动 */
-}
+            background: white;
+            border-radius: 48px;
+            padding: 32px 24px;  /* 适当减小上下内边距 */
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;    /* 高度不超过视口90% */
+            overflow-y: auto;    /* 内容过多时内部滚动 */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            border: 1px solid #e7ddd2;
+            -webkit-overflow-scrolling: touch; /* 流畅滚动 */
         }
         .entry-form-card h2 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: #2c5e4b;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
         .entry-form-card p {
             color: #5e4b3c;
-            margin-bottom: 32px;
-            font-size: 16px;
-            line-height: 1.6;
+            margin-bottom: 24px;
+            font-size: 15px;
+            line-height: 1.5;
         }
         .form-field {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .form-field label {
             display: block;
             font-weight: 600;
             color: #3a2e24;
-            margin-bottom: 8px;
-            font-size: 15px;
+            margin-bottom: 6px;
+            font-size: 14px;
         }
         .form-field input, .form-field select {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             border: 2px solid #e7ddd2;
-            border-radius: 50px;
-            font-size: 16px;
+            border-radius: 40px;
+            font-size: 15px;
             background: white;
             transition: 0.2s;
         }
@@ -90,18 +89,18 @@
             appearance: none;
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%235e4b3c'><path d='M7 10l5 5 5-5z'/></svg>");
             background-repeat: no-repeat;
-            background-position: right 20px center;
+            background-position: right 18px center;
         }
         .entry-submit {
             background: #b16e42;
             color: white;
             border: none;
             border-radius: 50px;
-            padding: 18px;
-            font-size: 20px;
+            padding: 16px;
+            font-size: 18px;
             font-weight: 700;
             width: 100%;
-            margin-top: 16px;
+            margin-top: 12px;
             cursor: pointer;
             transition: 0.2s;
             border: 2px solid white;
@@ -111,8 +110,8 @@
             transform: scale(1.02);
         }
         .privacy-note {
-            margin-top: 24px;
-            font-size: 13px;
+            margin-top: 20px;
+            font-size: 12px;
             color: #8a6e4b;
             text-align: center;
         }
@@ -331,22 +330,27 @@
                 <span>🥢</span> 西关味·加盟投资
             </h2>
             <p>请填写基本信息，解锁您的专属回本测算器。<br>总部开发经理将根据您的意向为您定制方案。</p>
+            
             <div class="form-field">
                 <label>📛 姓名</label>
                 <input type="text" id="entryName" placeholder="例如：张伟" autocomplete="off">
             </div>
+            
             <div class="form-field">
                 <label>🎂 年龄</label>
                 <input type="number" id="entryAge" placeholder="例如：35" min="18" max="70" step="1">
             </div>
+            
             <div class="form-field">
                 <label>📍 意向开店城市</label>
                 <input type="text" id="entryCity" placeholder="例如：郑州、西安" autocomplete="off">
             </div>
+            
             <div class="form-field">
                 <label>📞 手机号码</label>
                 <input type="tel" id="entryPhone" placeholder="11位手机号" autocomplete="off">
             </div>
+            
             <div class="form-field">
                 <label>💰 预计投资额</label>
                 <select id="entryInvestment">
@@ -358,7 +362,9 @@
                     <option value="50万以上">50万以上</option>
                 </select>
             </div>
+            
             <button class="entry-submit" onclick="submitEntryForm()">▶ 立即进入测算器</button>
+            
             <div class="privacy-note">
                 提交即视为同意《隐私政策》，我们将严格保护您的个人信息
             </div>
@@ -417,7 +423,7 @@
             </div>
         </div>
 
-        <!-- 固定成本参数（管理费已统一为fixed-param样式） -->
+        <!-- 固定成本参数 -->
         <div class="fixed-params">
             <span class="fixed-param">🍖 食材成本 = 营业额的40%</span>
             <span class="fixed-param">💧 水电杂费 = 营业额的8%</span>
@@ -597,14 +603,16 @@
             document.getElementById('investmentDisplay').innerText = currentInvestment.toFixed(1);
         }
 
-        // ---------- 主表单提交（姓名、年龄、城市、电话、预计投资额）----------
+        // ---------- 主表单提交（集成腾讯文档）----------
         function submitEntryForm() {
+            // 获取表单值
             let name = document.getElementById('entryName').value.trim();
             let age = document.getElementById('entryAge').value.trim();
             let city = document.getElementById('entryCity').value.trim();
             let phone = document.getElementById('entryPhone').value.trim();
             let investment = document.getElementById('entryInvestment').value;
 
+            // 简单验证
             if (!name || !age || !city || !phone || !investment) {
                 alert('请完整填写所有信息');
                 return;
@@ -618,21 +626,22 @@
                 return;
             }
 
-            // 组装数据详情
-            let detail = `姓名:${name},年龄:${age},意向城市:${city},电话:${phone},预计投资:${investment}`;
+            // --- 腾讯文档预填链接（已替换为您提供的表单ID） ---
+            let formId = 'DWGtIanRVT2pRRkRI';  // 从您链接中提取的ID
+            let formUrl = `https://docs.qq.com/form/fill/${formId}?_w_tencentdocx_form=1&姓名=${encodeURIComponent(name)}&年龄=${encodeURIComponent(age)}&意向开店城市=${encodeURIComponent(city)}&手机号码=${encodeURIComponent(phone)}&预计投资额=${encodeURIComponent(investment)}`;
             
-            // TODO: 替换为您的腾讯文档收集表预填链接
-            let formUrl = `https://docs.qq.com/form/fill/XXXXXX?_w_tencentdocx_form=1&姓名=${encodeURIComponent(name)}&年龄=${encodeURIComponent(age)}&意向城市=${encodeURIComponent(city)}&电话=${encodeURIComponent(phone)}&预计投资额=${encodeURIComponent(investment)}&测算详情=${encodeURIComponent('尚未测算')}`;
-            
+            // 在新窗口打开腾讯文档（用户只需点击“提交”即可）
             window.open(formUrl, '_blank');
 
             // 隐藏主表单，显示测算器
             document.getElementById('entryFormContainer').style.display = 'none';
             document.getElementById('calculatorMain').style.display = 'block';
             
+            // 初始化测算器
             initCalculator();
             
-            alert('信息已提交！现在您可以自由测算回本周期了。');
+            // 提示用户（可选）
+            alert('信息已提交！请在腾讯文档页面点击“提交”完成登记，现在您可以自由测算回本周期了。');
         }
     </script>
 </body>
